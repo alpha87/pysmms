@@ -19,7 +19,7 @@ def auth():
     """
 
     config = configparser.ConfigParser()
-    _config = config.read(os.path.expanduser('~') + '/.pysmms')
+    _config = config.read(os.path.expanduser("~") + "/.pysmms")
     if _config:
         return eval(config["sm.ms"]["auth"])
     return []
@@ -41,14 +41,19 @@ def table_err(items):
     """
 
     if items["code"] == "image_repeated":
-        url = re.findall("Image upload repeated limit, this image exists at: (.*)",
-                         items["message"])[0]
+        url = re.findall(
+            "Image upload repeated limit, this image exists at: (.*)", items["message"]
+        )[0]
         data = [
-            ["Code", items["code"]], ["Message", "此图已存在"],
-            ["URL", url], ["Request Id", items["RequestId"]]
+            ["Code", items["code"]],
+            ["Message", "此图已存在"],
+            ["URL", url],
+            ["Request Id", items["RequestId"]]
         ]
     else:
-        data = [["Code", items["code"]],
-                ["Message", items["message"]],
-                ["Request Id", items["RequestId"]]]
+        data = [
+            ["Code", items["code"]],
+            ["Message", items["message"]],
+            ["Request Id", items["RequestId"]]
+        ]
     return table(items=data, title="异常")

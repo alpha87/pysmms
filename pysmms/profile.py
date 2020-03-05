@@ -5,7 +5,6 @@ from .utils import auth, table, profile_url
 
 
 class Profile(object):
-
     def __init__(self):
         self.auth_list = auth() if auth() else None
         self.profile_url = profile_url
@@ -17,12 +16,14 @@ class Profile(object):
         """
 
         data = item["data"]
-        items = [["用户名", data["username"]],
-                 ["电子邮箱", data["email"]],
-                 ["用户组", data["role"]],
-                 ["到期时间", data["group_expire"]],
-                 ["已使用", data["disk_usage"]],
-                 ["总容量", data["disk_limit"]]]
+        items = [
+            ["用户名", data["username"]],
+            ["电子邮箱", data["email"]],
+            ["用户组", data["role"]],
+            ["到期时间", data["group_expire"]],
+            ["已使用", data["disk_usage"]],
+            ["总容量", data["disk_limit"]]
+        ]
         return table(items=items, title="用户资料")
 
     def get_profile(self):
@@ -33,8 +34,7 @@ class Profile(object):
         result = list()
         for auth in self.auth_list:
             headers = {"Authorization": auth}
-            doc = json.loads(requests.post(self.profile_url,
-                                           headers=headers).text)
+            doc = json.loads(requests.post(self.profile_url, headers=headers).text)
             if doc["success"]:
                 item = self.format_profile(doc)
                 result.append(item)

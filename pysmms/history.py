@@ -28,14 +28,18 @@ class History(object):
         url_list = url_list[:5]
         items = list()
         for data in url_list:
-            timestamp = time.strftime("%Y-%m-%d %H:%M:%S",
-                                      time.localtime(data["created_at"]))
-            items.extend([
-                ["文件", data["filename"]],
-                ["创建时间", timestamp],
-                ["图片地址", data["url"]],
-                ["删除", data["delete"]],
-                ["-", "-"]])
+            timestamp = time.strftime(
+                "%Y-%m-%d %H:%M:%S", time.localtime(data["created_at"])
+            )
+            items.extend(
+                [
+                    ["文件", data["filename"]],
+                    ["创建时间", timestamp],
+                    ["图片地址", data["url"]],
+                    ["删除", data["delete"]],
+                    ["-", "-"]
+                ]
+            )
         return table(items=items[:-1], title="历史上传记录")
 
     def get_upload_history(self, auth=None):
@@ -46,15 +50,14 @@ class History(object):
         if not auth:
             print("请选择需要查询的账号：\n")
             for i, _auth in enumerate(self.auth_list):
-                print("{}.  ".format(i+1) + _auth)
+                print("{}.  ".format(i + 1) + _auth)
             sys.exit("\n使用方法：pysmms history <Authorization>")
 
         if auth not in self.auth_list:
             sys.exit("您的输入有误！请核对 Authorization！")
 
         headers = {"Authorization": auth}
-        doc = json.loads(requests.get(self.upload_history_url,
-                                      headers=headers).text)
+        doc = json.loads(requests.get(self.upload_history_url, headers=headers).text)
         if doc["success"]:
             return self.format_upload_history(doc)
         return table_err(doc)

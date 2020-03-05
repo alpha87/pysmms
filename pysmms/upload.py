@@ -42,8 +42,7 @@ class Upload(object):
         files = {"smfile": (os.path.basename(img_path), open(img_path, "rb"))}
         if self.auth:
             headers = {"Authorization": self.auth}
-            html = requests.post(self.upload_url,
-                                 headers=headers, files=files)
+            html = requests.post(self.upload_url, headers=headers, files=files)
         else:
             html = requests.post(self.upload_url, files=files)
         doc = json.loads(html.text)

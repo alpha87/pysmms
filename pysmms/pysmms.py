@@ -18,7 +18,7 @@ def app():
         sys.exit("缺少参数！使用 'pysmms help' 命令查看所有参数。")
 
     if os.path.exists(sys.argv[1]):
-        allowed_file_extensions = ['.jpeg','.jpg','.png','.gif','.bmp']
+        allowed_file_extensions = [".jpeg", ".jpg", ".png", ".gif", ".bmp"]
         if os.path.splitext(sys.argv[1])[1] not in allowed_file_extensions:
             sys.exit("文件类型不支持！")
         up = Upload()
@@ -47,5 +47,5 @@ def app():
         sys.exit(result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app()

@@ -25,11 +25,14 @@ class IPHistory(object):
         url_list = url_list[:5]
         items = list()
         for data in url_list:
-            items.extend([
-                ["文件", data["filename"]],
-                ["图片地址", data["url"]],
-                ["删除", data["delete"]],
-                ["-", "-"]])
+            items.extend(
+                [
+                    ["文件", data["filename"]],
+                    ["图片地址", data["url"]],
+                    ["删除", data["delete"]],
+                    ["-", "-"]
+                ]
+            )
         return table(items=items[:-1], title="上传记录")
 
     def get_history(self):
