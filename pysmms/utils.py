@@ -11,9 +11,37 @@ upload_history_url = base_url + "upload_history"
 upload_url = base_url + "upload"
 
 
+def gh_conf():
+    """
+    读取 ~/.pysmms 文件中 GitHub 配置。
+
+    """
+
+    config = configparser.ConfigParser()
+    _config = config.read(os.path.expanduser("~") + "/.pysmms")
+    if _config:
+        return {
+            "user": config["github"]["user"],
+            "repo": config["github"]["repo"],
+            "branch": config["github"]["branch"],
+            "token": config["github"]["token"],
+        }
+    return None
+
+
+def gh_table(items):
+    """
+    生成表格
+    """
+
+    table_instance = DoubleTable(items, "GitHub - 上传图片")
+    table_instance.inner_row_border = True
+    return table_instance.table
+
+
 def auth():
     """
-    读取 ~/.pysmms 文件。
+    读取 ~/.pysmms 文件中 smms 配置。
 
     如果读取失败返回空列表。
     """

@@ -1,7 +1,19 @@
+"""
+   ___ _
+  |_  (_)
+    | |_  __ _ _ __ __  ___   _ _ __
+    | | |/ _` | '_ \\ \/ / | | | '_ \
+/\__/ / | (_| | | | |>  <| |_| | | | |
+\____/|_|\__,_|_| |_/_/\_\\__,_|_| |_|
+
+"""
+
+
 import os
 import sys
 
 from .upload import Upload
+from .git_upload import GitPic
 from .profile import Profile
 from .ip_history import IPHistory
 from .history import History
@@ -17,8 +29,9 @@ def app():
     if len(sys.argv) < 2:
         sys.exit("缺少参数！使用 'pysmms help' 命令查看所有参数。")
 
+    allowed_file_extensions = [".jpeg", ".jpg", ".png", ".gif", ".bmp"]
+
     if os.path.exists(sys.argv[1]):
-        allowed_file_extensions = [".jpeg", ".jpg", ".png", ".gif", ".bmp"]
         if os.path.splitext(sys.argv[1])[1] not in allowed_file_extensions:
             sys.exit("文件类型不支持！")
         up = Upload()
@@ -42,6 +55,13 @@ def app():
         ip_history = IPHistory()
         result = ip_history.get_history()
         sys.exit(result)
+    elif sys.argv[1] == "gh" and len(sys.argv) > 2:
+        if os.path.exists(sys.argv[2]):
+            if os.path.splitext(sys.argv[2])[1] not in allowed_file_extensions:
+                sys.exit("文件类型不支持！")
+            git_up = GitPic()
+            result = git_up.upload(sys.argv[2])
+            sys.exit(result)
     else:
         result = help()
         sys.exit(result)

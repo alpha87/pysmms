@@ -31,8 +31,13 @@ class Upload(object):
             ["删除", data["delete"]],
             ["备注", remark]
         ]
-        pyperclip.copy(img_url)
-        return table(items=items, title="上传成功")
+
+        try:
+            pyperclip.copy(img_url)
+        except pyperclip.PyperclipException:
+            print("您的系统不支持复制粘贴！\n尝试输入：\n\tsudo apt-get install -y xsel xclip  ")
+        finally:
+            return table(items=items, title="上传成功")
 
     def upload(self, img_path):
         """
